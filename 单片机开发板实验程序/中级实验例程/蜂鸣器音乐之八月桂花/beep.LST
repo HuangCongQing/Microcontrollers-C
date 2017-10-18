@@ -1,0 +1,102 @@
+C51 COMPILER V9.01   BEEP                                                                  04/18/2017 12:53:09 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE BEEP
+OBJECT MODULE PLACED IN beep.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE beep.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          /************************************************************************  
+   2          [ÎÄ¼þÃû]  C51ÒôÀÖ³ÌÐò(°ËÔÂ¹ð»¨)  
+   3          [¹¦ÄÜ]    Í¨¹ýµ¥Æ¬»úÑÝ×àÒôÀÖ  
+   4            
+   5          /**********************************************************************/   
+   6          #include <REG52.H>    
+   7          #include <INTRINS.H>    
+   8          //±¾Àý²ÉÓÃ89C52, ¾§ÕñÎª12MHZ    
+   9          //¹ØÓÚÈçºÎ±àÖÆÒôÀÖ´úÂë, ÆäÊµÊ®·Ö¼òµ¥,¸÷Î»¿ÉÒÔ¿´ÒÔÏÂ´úÂë.    
+  10          //ÆµÂÊ³£Êý¼´ÒôÀÖÊõÓïÖÐµÄÒôµ÷,¶ø½ÚÅÄ³£Êý¼´ÒôÀÖÊõÓïÖÐµÄ¶àÉÙÅÄ;    
+  11          //ËùÒÔÄÃ³öÆ××Ó, ÊÔÌ½±à°É!    
+  12          
+  13          sbit Beep =  P1^5; 
+  14             
+  15          unsigned char n=0;  //nÎª½ÚÅÄ³£Êý±äÁ¿    
+  16          unsigned char code music_tab[] ={   
+  17          0xF2,0xF3,0xF5,0xF5,0xF6,0xF7,0xF8, //µÍÒô 1£¬2£¬3£¬4£¬5£¬6£¬7
+  18          
+  19          0xF9,0xF9,0xFA,0xFA,0xFB,0xFB,0xFC,0xFC, //ÖÐÒô 1£¬2£¬3£¬4£¬5£¬6£¬7£¬i
+  20          
+  21          0xFC,0xFD,0xFD,0xFD,0xFD,0xFE,  //¸ßÒô 2£¬3£¬4£¬5£¬6£¬7
+  22          
+  23          0xFE,0xFE,0xFE,0xFE,0xFE,0xFE,0xFF,     //³¬¸ßÒô1£¬2£¬3£¬4£¬5£¬6£¬7
+  24          
+  25          };
+  26             
+  27           code unsigned char FREQL[]={
+  28          
+  29          0x42,0xC1,0x17,0xB6,0xD0,0xD1,0xB6,
+  30          
+  31          0x21,0xE1,0x8C,0xD8,0x68,0xE9,0x5B,0x8F, //1,2,3,4,5,6,7,8,i
+  32          
+  33          0xEE,0x44, 0x6B,0xB4,0xF4,0x2D,
+  34          
+  35          0x47,0x77,0xA2,0xB6,0xDA,0xFA,0x16,//µÍÒô¡¢ÖÐÒô¡¢¸ßÒôºÍ³¬¸ßÒô£¬ËÄ¸ö°Ë¶È¹²28¸öÒô·û
+  36          
+  37          };
+  38            
+  39          void int0()  interrupt 1   //²ÉÓÃÖÐ¶Ï0 ¿ØÖÆ½ÚÅÄ    
+  40          {  TH0=0xd8;   
+  41   1         TL0=0xef;   
+  42   1         n--;   
+  43   1      }   
+  44             
+  45          void delay (unsigned char m)   //¿ØÖÆÆµÂÊÑÓÊ±    
+  46          {   
+  47   1       unsigned i=3*m;   
+  48   1       while(--i);   
+  49   1      }   
+  50             
+  51          void delayms(unsigned char a)  //ºÁÃëÑÓÊ±×Ó³ÌÐò    
+  52          {   
+  53   1        while(--a);                  //²ÉÓÃwhile(--a) ²»Òª²ÉÓÃwhile(a--); ¸÷Î»¿É±àÒëÒ»ÏÂ¿´¿´»ã±à½á¹û¾ÍÖªµÀÁË!   
+             - 
+  54   1      }   
+C51 COMPILER V9.01   BEEP                                                                  04/18/2017 12:53:09 PAGE 2   
+
+  55             
+  56          void main()   
+  57          { unsigned char p,m;   //mÎªÆµÂÊ³£Êý±äÁ¿    
+  58   1        unsigned char i=0;   
+  59   1        TMOD&=0x0f;   
+  60   1        TMOD|=0x01;   
+  61   1        TH0=0xd8;TL0=0xef;   
+  62   1        IE=0x82;   
+  63   1      play:   
+  64   1         while(1)   
+  65   1          {   
+  66   2          a: p=music_tab[i];   
+  67   2             if(p==0x00)       { i=0, delayms(1000); goto play;}     //Èç¹ûÅöµ½½áÊø·û,ÑÓÊ±1Ãë,»Øµ½¿ªÊ¼ÔÙÀ´Ò»±é  
+             -  
+  68   2             else if(p==0xff)  { i=i+1;delayms(100),TR0=0; goto a;}  //ÈôÅöµ½ÐÝÖ¹·û,ÑÓÊ±100ms,¼ÌÐøÈ¡ÏÂÒ»Òô·û    
+  69   2                  else         {m=music_tab[i++], n=music_tab[i++];}  //È¡ÆµÂÊ³£Êý ºÍ ½ÚÅÄ³£Êý    
+  70   2                   TR0=1;                                             //¿ª¶¨Ê±Æ÷1    
+  71   2                 while(n!=0) Beep=~Beep,delay(m);                         //µÈ´ý½ÚÅÄÍê³É, Í¨¹ýP1¿ÚÊä³öÒôÆµ(¿É¶àÉ
+             -ùµÀÅ¶!)    
+  72   2             TR0=0;                                             //¹Ø¶¨Ê±Æ÷1    
+  73   2          }   
+  74   1      }  
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    111    ----
+   CONSTANT SIZE    =     56    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
