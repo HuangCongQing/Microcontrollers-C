@@ -30,7 +30,7 @@ void delay(u16 i)
 void main()
 {
 	u8 i;
-	led=0xfe;
+	led=0xfe;	   // 1111 1110
 	delay(50000); //大约延时450ms	
 	while(1)
 	{	
@@ -39,7 +39,7 @@ void main()
 			P2=~(0x01<<i);	 //将1右移i位，然后将结果取反赋值到P2口
 			delay(50000); //大约延时450ms
 		}
-*/		
+*/							 // 移动6次就够了
 		for(i=0;i<7;i++)	 //将led左移一位
 		{
 			led=_crol_(led,1);
