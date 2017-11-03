@@ -54,8 +54,8 @@ void DigDisplay()
 				LSA=1;LSB=1;LSC=1; break;//显示第7位	
 		}
 		P0=smgduan[i];//发送段码
-		delay(100); //间隔一段时间扫描	
-		P0=0x00;//消隐
+		delay(100); //间隔一段时间扫描	,否则不是很亮
+		P0=0x00;//消隐	 .P0口清零？？
 	}
 }
 
