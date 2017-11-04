@@ -34,7 +34,7 @@ void keypros()
 		{
 			led=~led;	  //led状态取反
 		}
-		while(!k1);	 //检测按键是否松开
+		while(!k1);	 //检测按键是否松开	，松开才会退出这个循环
 	}		
 }
 

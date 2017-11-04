@@ -25,6 +25,11 @@ sbit LSC=P2^4;
 ```
 ![image.png](http://upload-images.jianshu.io/upload_images/4340772-24f9fab2cb8ee7dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
+## 独立按键
+
+* P3^1，P是大写
+* 消除抖动 一般大约10ms
+
 
 ### 相关图片
 ![端口](http://upload-images.jianshu.io/upload_images/4340772-0a1fbf7f6d0c4741.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)

@@ -51,7 +51,7 @@ void KeyDown(void)
 		if(GPIO_KEY!=0x0f)//再次检测键盘是否按下
 		{	
 			//测试列
-			GPIO_KEY=0X0F;
+			GPIO_KEY=0X0F;		 //高四位为0，低四位为1
 			switch(GPIO_KEY)
 			{
 				case(0X07):	KeyValue=0;break;
