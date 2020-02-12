@@ -1,7 +1,11 @@
 # Microcontrollers-C
 C framework for different microcontrollers用C语言写的单片机程序
 
-51单片机开发板视频
+51单片机开发板视频：
+
+链接：https://pan.baidu.com/s/10fTTaxYWiL2rO-KiOEtndw 
+提取码：toid 
+复制这段内容后打开百度网盘手机App，操作更方便哦
 
 # 流水灯
 ## sbit 变量名=地址值；  在给某个引脚取名的时候经常会用到。
