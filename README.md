@@ -1,6 +1,8 @@
 # Microcontrollers-C
 C framework for different microcontrollers用C语言写的单片机程序
 
+51单片机开发板视频
+
 # 流水灯
 ## sbit 变量名=地址值；  在给某个引脚取名的时候经常会用到。
 
